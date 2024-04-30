@@ -1,71 +1,46 @@
 import { useState } from "react";
 import "./App.css";
+import Input from "./Input";
+import TextArea from "./TextArea";
+import Radios from './Radios'
+import Checkbox from './Checkbox'
 
 export default function App() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+    complaint: '',
+    contact: '',
+    dataAgree: false
+  })
 
-  //TODO: Add your state fields here
+  function handleSubmit (e) {
+    e.preventDefault()
+    console.log(formData)
+  }
+
 
   return (
     <>
-      <form className="form">
+      <form onSubmit={handleSubmit} className="form">
         <h2>Complaining form!</h2>
-        <div className="form__section-left">
-          <label>
-            Full name
-            <input type="text" name="name" required />
-          </label>
-          <label>
-            Address
-            <input type="text" name="address" />
-          </label>
-          <label>
-            Phone Number
-            <input type="tel" name="phone" />
-          </label>
 
-          <label>
-            Email
-            <input type="email" name="email" />
-          </label>
-        </div>
+        <Input setFormData={setFormData} formData={formData} />
 
         <div className="form__section-right">
           <label>
             Write your complaint
-            <textarea
-              name="complaint"
-              rows="10"
-              placeholder="You can complain here"
-            ></textarea>
+            <TextArea setFormData={setFormData} formData={formData}/>
           </label>
 
           <div className="form__radio-group">
             <p>How do you want to be contacted? </p>
-            <label>
-              <input type="radio" name="contact" value="phone" />
-              Phone
-            </label>
-
-            <label>
-              <input type="radio" name="contact" value="email" />
-              Email
-            </label>
-
-            <label>
-              <input type="radio" name="contact" value="post" />
-              Slow Mail
-            </label>
-
-            <label>
-              <input type="radio" name="contact" value="none" />
-              No contact!
-            </label>
+            <Radios setFormData={setFormData} formData={formData}/>
           </div>
 
-          <label>
-            I agree you take my data, and do whatever
-            <input type="checkbox" name="consent" id="consent" />
-          </label>
+          <Checkbox setFormData={setFormData} formData={formData}/>
         </div>
         <input type="submit" value="Submit!" />
       </form>
